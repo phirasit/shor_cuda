@@ -3,6 +3,7 @@
 #include "factorization.hpp"
 #include "shor_interface.hpp"
 #include "shor_cpu.hpp"
+#include "shor_gpu.hpp"
 
 static void show_usage(void);
 
@@ -37,7 +38,7 @@ int main(int argc, char* argv[]) {
     if (option == "cpu") {
       shor_cpu(N).factorize();
     } else if (option == "gpu") {
-      // shor_gpu(N).factorize();
+      shor_gpu(N).factorize();
     }
 
   } catch (const std::invalid_argument& arg) {
