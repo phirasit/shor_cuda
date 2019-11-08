@@ -3,8 +3,19 @@
 #include <algorithm>
 #include <limits>
 
-int log2(int a) {
-  return 31 - __builtin_clz(a);
+// int log2(int a) {
+//   // return 31 - __builtin_clz(a);
+//   return log2 (a);
+// }
+
+int gcd (int n1, int n2) {
+    int tmp;
+    while (n2 != 0) {
+        tmp = n1;
+        n1 = n2;
+        n2 = tmp % n2;
+    }
+    return n1;
 }
 
 int pow_mod(int a, int b, int N) {

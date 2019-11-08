@@ -56,7 +56,7 @@ int shor_interface::test_period_using_cf(int a, int y) {
       std::swap(d, s);
       d += cf[j] * s;
 
-      const long long g = std::__gcd(d, s);
+      const long long g = gcd(d, s);
       d /= g;
       s /= g;
     }
@@ -79,11 +79,11 @@ void shor_interface::factorize(void) {
     // get a random value
     const int a = rand() % (N-2) + 2;
     std::cerr << "choose a = " << a << std::endl;
-    int gcd = std::__gcd(a, N);
-    if (gcd != 1) {
+    int _gcd = gcd(a, N);
+    if (_gcd != 1) {
       // too easy continue
       std::cerr << " // answer is found accidentally" << std::endl;
-      std::cerr << " // Answer: " << N << " = " << gcd << " x " << (N/gcd) << std::endl;
+      std::cerr << " // Answer: " << N << " = " << _gcd << " x " << (N/_gcd) << std::endl;
       continue;
     }
 

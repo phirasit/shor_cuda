@@ -1,1 +1,6 @@
 shor
+./bin
+./obj
+*.exp
+*.obj
+*.lib
