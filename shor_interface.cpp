@@ -97,10 +97,18 @@ void shor_interface::factorize(void) {
         std::cerr << "Period is odd: try again" << std::endl;
         continue;
       }
-      if (pow_mod(a, period / 2, N) == 1) {
+      const int check = pow_mod(a, period / 2, N);
+      if (check == 1 || check == N-1) {
         std::cerr << "Not the best period" << std::endl;
         continue;
       }
+
+      // find the 2 primes
+      const bigint x = bigint(a) ^ bigint(period >> 1);
+      const bigint p1 = gcd(x-1, N), p2 = gcd(x+1, N);
+
+      std::cerr << "Shor's algorithm result " << N << " = " << p1 << " x " << p2 << std::endl;
+
       return;
     }
   }
