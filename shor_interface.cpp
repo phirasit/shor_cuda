@@ -72,10 +72,11 @@ int shor_interface::test_period_using_cf(int a, int y) {
 }
 
 void shor_interface::factorize(void) {
-  static const int THRESHOLD_ROUND = 30;
+  // static const int THRESHOLD_ROUND = 30;
   std::cerr << "number of qbits = " << n << std::endl;
 
-  for (int round = 0; round < THRESHOLD_ROUND; ++round) {
+  // for (int round = 0; round < THRESHOLD_ROUND; ++round) {
+  while (true) {
     // get a random value
     const int a = rand() % (N-2) + 2;
     std::cerr << "choose a = " << a << std::endl;
