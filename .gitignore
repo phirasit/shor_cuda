@@ -1,6 +1,4 @@
 shor
-./bin
-./obj
-*.exp
-*.obj
-*.lib
+build.log
+*.o
+.fuse_hidden*

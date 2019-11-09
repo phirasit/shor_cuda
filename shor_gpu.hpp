@@ -3,10 +3,10 @@
 
 #include "shor_interface.hpp"
 
-// #include <complex>
+#include <complex>
 #include <thrust/complex.h>
 
-using cudouble = thrust::complex<float>;
+using cudouble = thrust::complex<double>;
 
 class shor_gpu : public shor_interface {
 
