@@ -1,6 +1,6 @@
 PROGRAM = shor
 CC 		= g++
-CFLAGS 	= -Wall -pedantic
+CFLAGS 	= -Wall -pedantic -std=c++11 -I .
 LDFLAGS = -lcuda -lcudart
 
 C_FILES := $(wildcard *.cpp)
