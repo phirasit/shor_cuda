@@ -1,6 +1,7 @@
 #include "shor_cpu.hpp"
 #include "math.hpp"
 
+#include <cassert>
 #include <algorithm>
 #include <iostream>
 #include <cmath>
@@ -29,7 +30,7 @@ void shor_cpu::hadamard(int q) {
 
 void shor_cpu::controlled_rz(int q1, int q2, double ang) {
   static const double PI2 = 2.0 * acos(-1.0);
-  const cdouble omega = exp(cdouble(1 * PI2 * ang));
+  const cdouble omega = exp(cdouble(0.0, PI2 * ang));
   const int mask_q = (1 << q1) | (1 << q2);
   for (int i = 0; !(i >> n); ++i) {
     if ((~i) & mask_q) continue;
@@ -46,6 +47,7 @@ int shor_cpu::measure(void) {
     rand -= prob;
   }
 
+  assert(false);
   return -1;
 }
 

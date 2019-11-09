@@ -28,7 +28,7 @@ void shor_gpu::hadamard(int q) {
 
 void shor_gpu::controlled_rz(int q1, int q2, double ang) {
   static const double PI2 = 2.0 * acos(-1.0);
-  const cudouble omega = exp(std::complex<double>(1j * PI2 * ang));
+  const cudouble omega = exp(std::complex<double>(0.0, PI2 * ang));
   const int mask_q = (1 << q1) | (1 << q2);
   gpu_controlled_rz(data, n, omega, mask_q);
 }
