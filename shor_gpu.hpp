@@ -11,7 +11,7 @@ using cudouble = thrust::complex<double>;
 class shor_gpu : public shor_interface {
 
   private:
-    cudouble * const data;
+    cudouble * data;
 
   public:
     void prepare_state(int a);
