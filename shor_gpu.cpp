@@ -30,11 +30,10 @@ void shor_gpu::controlled_rz(int q1, int q2, double ang) {
 
 int shor_gpu::measure(void) {
   double rand = (double) std::rand() / RAND_MAX;
-  cudouble * tmp = new cudouble[1 << n];
-  gpu_memcpy(tmp, data, n);
+  gpu_memcpy(buffer, data, n);
 
   for (int i = 0; !(i >> n); ++i) {
-    std::complex<double> data_i = tmp[i];
+    std::complex<double> data_i = buffer[i];
     const double prob = std::pow(std::abs(data_i), 2.0);
     if (rand <= prob) return i;
     rand -= prob;
@@ -44,25 +43,27 @@ int shor_gpu::measure(void) {
 }
 
 void shor_gpu::debug(void) {
-  cudouble * tmp = new cudouble[1 << n];
-  gpu_memcpy(tmp, data, n);
+  gpu_memcpy(buffer, data, n);
 
   for (int i = 0; !(i >> n); ++i) {
     const int z = i >> n;
-    std::complex<double> data_i = tmp[i];
+    std::complex<double> data_i = buffer[i];
     if (std::pow(std::abs(data_i), 2) > 1e-5)
       std::cerr << z << " = " << data[i] << std::endl;
   }
+
+  delete buffer;
 }
 
 shor_gpu::shor_gpu(int N, int sm)
- : shor_interface(N), sm(sm) {
-    // data(new cudouble[1 << n]) 
+ : shor_interface(N),
+   buffer(new cudouble[1 << n]),
+   sm(sm) {
     gpu_init(&data, n);
   }
 
 shor_gpu::~shor_gpu() {
-  // delete data;
+  delete buffer;
   gpu_deinit(data);
 }
 
