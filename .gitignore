@@ -2,3 +2,4 @@ shor
 build.log
 *.o
 .fuse_hidden*
+benchmark.txt

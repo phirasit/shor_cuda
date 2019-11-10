@@ -12,6 +12,7 @@ class shor_gpu : public shor_interface {
 
   private:
     cudouble * data;
+    int sm;
 
   public:
     void prepare_state(int a);
@@ -21,7 +22,7 @@ class shor_gpu : public shor_interface {
 
     void debug(void);
 
-    shor_gpu(int n);
+    shor_gpu(int n, int sm);
     ~shor_gpu();
 };
 

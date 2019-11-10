@@ -8,7 +8,7 @@
 static void show_usage(void);
 
 int main(int argc, char* argv[]) {
-  if (argc != 3) {
+  if (argc < 3 && argc > 4) {
     std::cerr << "number of arguments (" << argc << ")" << "is invalid" << std::endl;
     show_usage();
     return 0;
@@ -25,6 +25,10 @@ int main(int argc, char* argv[]) {
     const int N = std::stoi(std::string(argv[2]));
     std::cerr << "N = " << N << std::endl;
 
+    int sm = 15;
+    if (option == "gpu" && argc == 4) 
+      sm = std::stoi(std::string(argv[3]));
+
     // factorize with conventional algorithm
     const std::pair<int, int> primes = factorization(N);
     if (primes.first < 0) {
@@ -38,7 +42,7 @@ int main(int argc, char* argv[]) {
     if (option == "cpu") {
       shor_cpu(N).factorize();
     } else if (option == "gpu") {
-      shor_gpu(N).factorize();
+      shor_gpu(N, sm).factorize();
     }
 
   } catch (const std::invalid_argument& arg) {

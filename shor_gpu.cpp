@@ -5,32 +5,27 @@
 #include <iostream>
 #include <cmath>
 
-extern void gpu_prepare_state(cudouble *data, int n, int period);
-extern void gpu_hadamard(cudouble *data, int n, int q);
-extern void gpu_controlled_rz(cudouble *data, int n, const cudouble omega, const int mask_q);
+extern void gpu_prepare_state(int sm, cudouble *data, int n, int period);
+extern void gpu_hadamard(int sm, cudouble *data, int n, int q);
+extern void gpu_controlled_rz(int sm, cudouble *data, int n, const cudouble omega, const int mask_q);
 extern void gpu_init(cudouble **data, int n);
 extern void gpu_deinit(cudouble *data);
 extern void gpu_memcpy(cudouble *dst, cudouble *src, int n);
 
 void shor_gpu::prepare_state(int a) {
   const int period = find_period(a, N);
-  gpu_prepare_state(data, n, period);
-
-  // cudouble * tmp = new cudouble[1 << n];
-  // gpu_memcpy(tmp, data, n);
-  // for (int i=0;i<n;i++)
-  //   std::cout << tmp[i] << data[i] << std::endl;
+  gpu_prepare_state(sm, data, n, period);
 }
 
 void shor_gpu::hadamard(int q) {
-  gpu_hadamard(data, n, q);
+  gpu_hadamard(sm, data, n, q);
 }
 
 void shor_gpu::controlled_rz(int q1, int q2, double ang) {
   static const double PI2 = 2.0 * acos(-1.0);
   const cudouble omega = exp(std::complex<double>(0.0, PI2 * ang));
   const int mask_q = (1 << q1) | (1 << q2);
-  gpu_controlled_rz(data, n, omega, mask_q);
+  gpu_controlled_rz(sm, data, n, omega, mask_q);
 }
 
 int shor_gpu::measure(void) {
@@ -60,8 +55,8 @@ void shor_gpu::debug(void) {
   }
 }
 
-shor_gpu::shor_gpu(int N)
- : shor_interface(N) {
+shor_gpu::shor_gpu(int N, int sm)
+ : shor_interface(N), sm(sm) {
     // data(new cudouble[1 << n]) 
     gpu_init(&data, n);
   }
